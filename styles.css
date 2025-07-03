@@ -1,0 +1,102 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+html { background: linear-gradient(180deg, #7729aa -13%, #170a2d 0%, #0a061d 7%, #010311 99%) fixed;
+       font-family: 'Atkinson Hyperlegible', sans-serif; color: #fff; }
+body { display: flex; flex-direction: column; }
+header { display: flex; align-items: center; padding: 10px; }
+.logo-sm { width: 32px; height: 32px; }
+.logo-main { height: 32px; margin-left: 8px; }
+main { flex: 1; display: flex; flex-direction: column; }
+.appname-logo { align-self: center; margin-top: 10px; width: 200px; height: 50px; }
+.center-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+h1 { margin: 0; font-size: 2rem; }
+.description { margin: 10px 0 20px; opacity: 0.8; }
+.prompt-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.13);
+               border-radius: 16px; padding: 20px; }
+.prompt-card textarea { width: 300px; height: 60px; padding: 10px; border: none; border-radius: 8px;
+                        background: rgba(0,0,0,0.2); color: #fff; margin-bottom: 10px; resize: none; }
+.prompt-card button { padding: 10px 20px; border: none; border-radius: 30px;
+                      background: linear-gradient(94deg,#c764ec,#4a36b1); cursor: pointer; color: #fff; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 10px;
+           margin: 20px; justify-items: center; }
+.card { position: relative; }
+.card img { width: 150px; height: auto; border-radius: 8px; cursor: pointer; }
+.card a.download { display: block; position: absolute; bottom: 8px; right: 8px;
+                   background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 8px;
+                   font-size: 12px; color: #fff; text-decoration: none; }
+
+
+.full-size {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+
+body {
+  background: linear-gradient(180deg, #0d0026 0%, #12002c 100%);
+}
+
+.banner {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.banner img {
+  max-width: 480px;
+  width: 90%;
+  height: auto;
+  display: inline-block;
+}
+
+
+body {
+  background: linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.banner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.banner img {
+  max-width: 800px;
+  width: 90%;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255,255,255,0.2);
+}
+
+
+body {
+  background: linear-gradient(to bottom, #150026, #260048, #1b0036, #110022);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+  color: #bbbbbb;
+  padding: 20px 0;
+  margin-top: 60px;
+  opacity: 0.6;
+}
+
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+  color: #bbbbbb;
+  padding: 20px 0;
+  margin-top: 60px;
+  opacity: 0.6;
+}
