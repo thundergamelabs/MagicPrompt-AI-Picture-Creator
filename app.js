@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!isSubscribed) {
     if (genBtn) genBtn.disabled = true;
+    if (subscribeBtn) subscribeBtn.style.display = "inline-block";
     status.textContent = "⚠️ Please subscribe first to use MagicPrompt.";
     return;
   }
@@ -145,3 +146,18 @@ function showFullscreen(src) {
   overlay.appendChild(img);
   document.body.appendChild(overlay);
 }
+
+
+
+  const subscribeBtn = document.getElementById("subscribeBtn");
+  if (subscribeBtn) {
+    subscribeBtn.addEventListener("click", async () => {
+      try {
+        const context = Windows.Services.Store.StoreContext.getDefault();
+        const result = await context.requestPurchaseAsync("9PLHW551GBFC");
+        console.log("Purchase result:", result.status);
+      } catch (err) {
+        console.error("Error during purchase:", err);
+      }
+    });
+  }
