@@ -1,6 +1,51 @@
 
 
+
+// =========================
+// ✅ Trial + Subscription Check
+// =========================
+
+const FORCE_SUBSCRIPTION_CHECK = undefined; // true or false for testing, undefined = normal behavior
+
 async function checkSubscription() {
+  if (typeof FORCE_SUBSCRIPTION_CHECK === "boolean") {
+    return FORCE_SUBSCRIPTION_CHECK;
+  }
+
+  if (!window.Windows || !Windows.Services || !Windows.Services.Store) {
+    console.warn("Store APIs unavailable — assuming non-Store environment");
+    return isTrialActive();
+  }
+
+  const context = Windows.Services.Store.StoreContext.getDefault();
+  const addOns = await context.getStoreProductsAsync(["Subscription"]);
+  const sub = addOns.products.lookup("9PLHW551GBFC");
+
+  if (sub && sub.hasLicense && sub.license.isActive) {
+    return true;
+  }
+
+  return isTrialActive();
+}
+
+function isTrialActive() {
+  const savedDate = localStorage.getItem("firstRunDate");
+  const today = new Date();
+
+  if (!savedDate) {
+    localStorage.setItem("firstRunDate", today.toISOString());
+    return true;
+  }
+
+  const firstRun = new Date(savedDate);
+  const diffDays = Math.floor((today - firstRun) / (1000 * 60 * 60 * 24));
+  return diffDays <= 7;
+}
+
+
+// ========== Old Block (disabled) ==========
+
+async function OLD_checkSubscription_unused() {
     if (!window.Windows || !Windows.Services || !Windows.Services.Store) {
     console.warn("Store APIs unavailable — must be run inside Microsoft Store");
     return false;
