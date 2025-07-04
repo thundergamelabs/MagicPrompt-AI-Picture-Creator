@@ -84,6 +84,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.body.appendChild(status);
   }
 
+  // 💳 Always attach Subscribe button logic FIRST
+  if (subscribeBtn) {
+    subscribeBtn.addEventListener('click', async () => {
+      try {
+        const context = Windows.Services.Store.StoreContext.getDefault();
+        const result = await context.requestPurchaseAsync("9PLHW551GBFC");
+        if (result.status === Windows.Services.Store.StorePurchaseStatus.succeeded) {
+          location.reload(); // Reload to recheck subscription
+        } else {
+          status.textContent = "⚠️ Subscription not completed.";
+        }
+      } catch (err) {
+        console.error("Purchase failed:", err);
+        status.textContent = "⚠️ Error while purchasing: " + err.message;
+      }
+    });
+  }
+
   // 🔐 Check subscription status
   const isSubscribed = await checkSubscription();
 
@@ -132,22 +150,4 @@ document.addEventListener("DOMContentLoaded", async () => {
       genBtn.disabled = false;
     }
   });
-
-  // 💳 Subscribe button logic — only one clean event
-  if (subscribeBtn) {
-    subscribeBtn.addEventListener('click', async () => {
-      try {
-        const context = Windows.Services.Store.StoreContext.getDefault();
-        const result = await context.requestPurchaseAsync("9PLHW551GBFC");
-        if (result.status === Windows.Services.Store.StorePurchaseStatus.succeeded) {
-          location.reload(); // Reload to recheck subscription
-        } else {
-          status.textContent = "⚠️ Subscription not completed.";
-        }
-      } catch (err) {
-        console.error("Purchase failed:", err);
-        status.textContent = "⚠️ Error while purchasing.";
-      }
-    });
-  }
 });
