@@ -3,10 +3,10 @@
   "description": "MagicPrompt is your creative companion for transforming words into beautiful visuals. Just type what’s in your mind — and let the AI turn it into an image. It’s simple, magical, and fun!",
   "dir": "ltr",
   "display": "standalone",
-  "name": "MagicPrompt: AI Picture Creator",
+  "name": "MagicPrompt : AI Picture Creator",
   "orientation": "any",
   "scope": "/",
-  "short_name": "MagicPrompt: AI Picture Creator",
+  "short_name": "MagicPrompt : AI Picture Creator",
   "start_url": "/",
   "theme_color": "#ffffff",
   "categories": [
@@ -48,7 +48,7 @@
   ],
   "shortcuts": [
     {
-      "name": "MagicPrompt: AI Picture Creator",
+      "name": "MagicPrompt : AI Picture Creator",
       "url": "",
       "description": "MagicPrompt is your creative companion for transforming words into beautiful visuals. Just type what’s in your mind — and let the AI turn it into an image. It’s simple, magical, and fun!"
     }
