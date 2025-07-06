@@ -6,9 +6,17 @@
   <title>MagicPrompt: AI Picture Creator</title>
   <link rel="manifest" href="manifest.json"/>
   <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* Optional: Add hover effect for the image button */
+    #subscribeBtn:hover {
+      opacity: 0.85;
+    }
+  </style>
 </head>
 <body>
-  <div class="banner"><img src="banner.png" alt="MagicPrompt Banner"/></div>
+  <div class="banner">
+    <img src="banner.png" alt="MagicPrompt Banner"/>
+  </div>
 
   <header>
     <img src="icons/logo-sm.png" class="logo-sm" alt="Logo"/>
@@ -20,18 +28,29 @@
     <div class="center-content">
       <h1>AI Text to Image</h1>
       <p class="description">Generate images from text prompts.</p>
-      <div class="prompt-card">
-        <textarea id="prompt" placeholder="Type your prompt here..."></textarea>
-        <button id="generate">Generate Image</button>
+
+      <!-- 🔐 Locked content container -->
+      <div id="lockedContent">
+        <div class="prompt-card">
+          <textarea id="prompt" placeholder="Type your prompt here..."></textarea>
+          <button id="generate">Generate Image</button>
+        </div>
+        <div id="gallery" class="gallery"></div>
       </div>
     </div>
 
-    <!-- 🚀 Added subscribe button (required for app.js logic) -->
+    <!-- 💳 Subscribe button using your custom image -->
     <div style="text-align:center; margin: 20px;">
-      <button id="subscribeBtn">🔓 Unlock Full Access</button>
+      <img
+        id="subscribeBtn"
+        src="images/button.png"
+        alt="Start Free Trial"
+        style="cursor:pointer; max-width:280px; width:90%; height:auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:opacity 0.2s ease-in-out;"
+      />
     </div>
 
-    <div id="gallery" class="gallery"></div>
+    <!-- 🟡 Status message -->
+    <div id="statusMessage" style="text-align:center; color:#ffcc00; margin-top:12px;"></div>
   </main>
 
   <script src="app.js"></script>

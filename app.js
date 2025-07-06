@@ -1,5 +1,5 @@
 // =========================
-// ✅ Trial + Subscription Check
+// ✅ Subscription Check (No Local Trial)
 // =========================
 
 const FORCE_SUBSCRIPTION_CHECK = undefined; // true or false for testing, undefined = normal behavior
@@ -11,32 +11,14 @@ async function checkSubscription() {
 
   if (!window.Windows || !Windows.Services || !Windows.Services.Store) {
     console.warn("Store APIs unavailable — assuming non-Store environment");
-    return isTrialActive();
+    return false;
   }
 
   const context = Windows.Services.Store.StoreContext.getDefault();
   const addOns = await context.getStoreProductsAsync(["Subscription"]);
   const sub = addOns.products.lookup("9PLHW551GBFC");
 
-  if (sub && sub.hasLicense && sub.license.isActive) {
-    return true;
-  }
-
-  return isTrialActive();
-}
-
-function isTrialActive() {
-  const savedDate = localStorage.getItem("firstRunDate");
-  const today = new Date();
-
-  if (!savedDate) {
-    localStorage.setItem("firstRunDate", today.toISOString());
-    return true;
-  }
-
-  const firstRun = new Date(savedDate);
-  const diffDays = Math.floor((today - firstRun) / (1000 * 60 * 60 * 24));
-  return diffDays <= 7;
+  return sub && sub.hasLicense && sub.license.isActive;
 }
 
 function showFullscreen(src) {
@@ -87,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 🧪 Debug: Check if Store API is available
   console.log("Store API available:", typeof Windows !== "undefined");
 
-  // 💳 Always attach Subscribe button logic FIRST
+  // 💳 Subscribe button logic
   if (subscribeBtn) {
     subscribeBtn.addEventListener('click', async () => {
       try {
@@ -110,11 +92,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!isSubscribed) {
     if (genBtn) genBtn.disabled = true;
-    status.textContent = "⚠️ Please subscribe first to use MagicPrompt.";
+    if (promptEl) promptEl.disabled = true;
+    status.textContent = "🔒 This app requires a subscription to use. Start your 7-day free trial now.";
     return;
   }
 
   genBtn.disabled = false;
+  promptEl.disabled = false;
 
   // 🌠 Image generation
   genBtn.addEventListener('click', async () => {
