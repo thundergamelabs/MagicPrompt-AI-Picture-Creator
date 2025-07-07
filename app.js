@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     subscribeBtn.addEventListener('click', async () => {
       try {
         if (window.chrome?.webview) {
+          console.log("📨 Sending startSubscription to app");
           window.chrome.webview.postMessage("startSubscription");
         } else {
           const context = Windows.Services.Store.StoreContext.getDefault();
