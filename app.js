@@ -9,6 +9,20 @@ async function checkSubscription() {
     return FORCE_SUBSCRIPTION_CHECK;
   }
 
+  // ✅ Desktop app bridge
+  if (window.chrome?.webview) {
+    return new Promise((resolve) => {
+      const handler = (event) => {
+        if (event.data === "subscribed") resolve(true);
+        else resolve(false);
+        window.chrome.webview.removeEventListener("message", handler);
+      };
+      window.chrome.webview.addEventListener("message", handler);
+      window.chrome.webview.postMessage("checkSubscription");
+    });
+  }
+
+  // 🌐 Fallback for browser
   if (!window.Windows || !Windows.Services || !Windows.Services.Store) {
     console.warn("Store APIs unavailable — assuming non-Store environment");
     return false;
@@ -73,12 +87,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (subscribeBtn) {
     subscribeBtn.addEventListener('click', async () => {
       try {
-        const context = Windows.Services.Store.StoreContext.getDefault();
-        const result = await context.requestPurchaseAsync("9PLHW551GBFC");
-        if (result.status === Windows.Services.Store.StorePurchaseStatus.succeeded) {
-          location.reload(); // Reload to recheck subscription
+        if (window.chrome?.webview) {
+          window.chrome.webview.postMessage("startSubscription");
         } else {
-          status.textContent = "⚠️ Subscription not completed.";
+          const context = Windows.Services.Store.StoreContext.getDefault();
+          const result = await context.requestPurchaseAsync("9PLHW551GBFC");
+          if (result.status === Windows.Services.Store.StorePurchaseStatus.succeeded) {
+            location.reload(); // Reload to recheck subscription
+          } else {
+            status.textContent = "⚠️ Subscription not completed.";
+          }
         }
       } catch (err) {
         console.error("Purchase failed:", err);
