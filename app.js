@@ -11,8 +11,10 @@ async function checkSubscription() {
 
   // ✅ Desktop app bridge
   if (window.chrome?.webview) {
+    console.log("🧪 Sending checkSubscription to app");
     return new Promise((resolve) => {
       const handler = (event) => {
+        console.log("📬 Received from app:", event.data);
         if (event.data === "subscribed") resolve(true);
         else resolve(false);
         window.chrome.webview.removeEventListener("message", handler);
@@ -85,6 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 💳 Subscribe button logic
   if (subscribeBtn) {
+    console.log("✅ subscribeBtn found and event listener attached");
     subscribeBtn.addEventListener('click', async () => {
       try {
         if (window.chrome?.webview) {
@@ -104,6 +107,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         status.textContent = "⚠️ Error while purchasing: " + err.message;
       }
     });
+  } else {
+    console.warn("❌ subscribeBtn not found in DOM");
   }
 
   // 🔐 Check subscription status
